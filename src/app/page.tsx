@@ -35,7 +35,7 @@ export default function ChatPage() {
       });
 
     // Now connect to socket
-    socket = io(`http://192.168.10.4:${process.env.NEXT_PUBLIC_SOCKET_PORT}`, {
+    socket = io(`${process.env.NEXT_PUBLIC_SOCKER_BASE_URL}:${process.env.NEXT_PUBLIC_SOCKET_PORT}`, {
       path: "/api/socket/io",
       query: { roomId, userId },
     });
