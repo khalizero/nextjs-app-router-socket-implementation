@@ -15,6 +15,7 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const searchParams = useSearchParams();
+  const [typingUsers, setTypingUsers] = useState<string[]>([]);
   const roomId = searchParams?.get("roomId");
   const userId = searchParams?.get("userId");
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -43,7 +44,23 @@ export default function ChatPage() {
       setMessages((prev) => [...prev, data]);
     });
 
-    return () => socket.disconnect();
+    socket.on("typing", (data: { userId: string }) => {
+      if (data.userId !== userId) {
+        setTypingUsers((prev) =>
+          prev.includes(data.userId) ? prev : [...prev, data.userId]
+        );
+      }
+    });
+
+    socket.on("stopTyping", (data: { userId: string }) => {
+      setTypingUsers((prev) => prev.filter((id) => id !== data.userId));
+    });
+
+    return () => {
+      socket.off("typing");
+      socket.off("stopTyping");
+      socket.disconnect();
+    };
   }, [roomId, userId]);
 
   useEffect(() => {
@@ -52,8 +69,19 @@ export default function ChatPage() {
 
   const sendMessage = () => {
     if (input.trim()) {
-      socket.emit("message", input); // server will broadcast it back
+      socket.emit("message", input); // Send message
+      socket.emit("stopTyping", { roomId, userId }); // 💡 Tell others you stopped typing
       setInput("");
+    }
+  };
+  
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+    if (e.target.value.trim()) {
+      socket.emit("typing", { roomId, userId });
+    } else {
+      socket.emit("stopTyping", { roomId, userId });
     }
   };
 
@@ -99,13 +127,20 @@ export default function ChatPage() {
         )}
         <div ref={messagesEndRef} />
       </div>
+      
+      {typingUsers.length > 0 && (
+        <div className="mb-1 text-gray-500 text-sm">
+          {typingUsers.join(", ")} {typingUsers.length === 1 ? "is" : "are"}{" "}
+          typing...
+        </div>
+      )}
 
       <div className="flex gap-2">
         <input
           className="flex-1 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-400"
           placeholder="Type your message..."
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={handleInputChange}
           onKeyDown={(e) => {
             if (e.key === "Enter") sendMessage();
           }}
