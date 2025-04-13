@@ -21,7 +21,7 @@ A clean and modern real-time chat application built with **Next.js** and **WebSo
 | Command             | Description                        |
 |---------------------|------------------------------------|
 | `yarn dev`          | Starts the Next.js development server on `http://localhost:3000` |
-| `yarn dev:socket`   | Starts the WebSocket server on `ws://localhost:3001` |
+| `yarn dev:socket`   | Starts the WebSocket server on `ws://localhost:{PORT Defined in ENV}` |
 
 > 💡 Make sure to run **both servers** for the app to function correctly.
 
@@ -37,6 +37,7 @@ To connect to a chat room, simply visit the app with the following URL pattern:
 
 ### Rules:
 
+- Chat Link will be like this -- localhost:3000?roomId={any}&userId={any}.
 - Users must share the **same `roomId`** to chat with each other.
 - Each user should have a **unique `userId`** within a room.
 - If two users join the same `roomId` with different `userId`s, they can chat in real-time.
@@ -55,9 +56,9 @@ To connect to a chat room, simply visit the app with the following URL pattern:
 
 ---
 
-## 📸 Screenshots
+<!-- ## 📸 Screenshots
 
-> _You can add screenshots or gifs here for better visual reference._
+> _You can add screenshots or gifs here for better visual reference._ -->
 
 ---
 
