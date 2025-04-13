@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🔌 Next.js WebSocket Chat App
 
-## Getting Started
+A clean and modern real-time chat application built with **Next.js** and **WebSockets**. Since WebSockets can't be handled via traditional API routes in Next.js, this project demonstrates how to implement a **custom WebSocket server** alongside a Next.js frontend.
 
-First, run the development server:
+> 🌟 Perfect for learning how to integrate WebSockets with Next.js in a scalable and efficient way.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 📡 WebSocket server separated from Next.js API routes
+- 🧑‍🤝‍🧑 Join dynamic rooms with unique user IDs
+- 💬 Real-time communication between multiple users
+- 🛠️ Easy local development setup
+- 🌐 URL-based room and user management
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🔧 Commands
 
-To learn more about Next.js, take a look at the following resources:
+| Command             | Description                        |
+|---------------------|------------------------------------|
+| `yarn dev`          | Starts the Next.js development server on `http://localhost:3000` |
+| `yarn dev:socket`   | Starts the WebSocket server on `ws://localhost:3001` |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+> 💡 Make sure to run **both servers** for the app to function correctly.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🧑‍💻 Usage
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To connect to a chat room, simply visit the app with the following URL pattern:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+
+
+### Rules:
+
+- Users must share the **same `roomId`** to chat with each other.
+- Each user should have a **unique `userId`** within a room.
+- If two users join the same `roomId` with different `userId`s, they can chat in real-time.
+
+---
+
+
+---
+
+## 📦 Tech Stack
+
+- [Next.js](https://nextjs.org/)
+- [Node.js](https://nodejs.org/)
+- [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
+- Yarn
+
+---
+
+## 📸 Screenshots
+
+> _You can add screenshots or gifs here for better visual reference._
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! If you'd like to improve the app, feel free to fork the repo and submit a pull request.
+
+---
+
+## 📄 License
+
+This project is open-source under the [MIT License](LICENSE).
+
+---
+
+## 🌍 Author
+
+Made with 💜 by **Muhammad Ahmed AKA Khalizero**
+
