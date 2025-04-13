@@ -4,7 +4,12 @@ import { Server as SocketIOServer } from 'socket.io';
 import { connectDB } from './src/lib/mongodb.js';
 import Message from './src/models/Message.js';
 
+// Added dotenv config for making sure no env error comes.
+import dotenv from 'dotenv';
+dotenv.config();
+
 console.log('MONGODB_URI:', process.env.NEXT_PUBLIC_MONGODB_URI);
+const PORT = process.env.NEXT_PUBLIC_SOCKET_PORT;
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -45,7 +50,6 @@ app.prepare().then(() => {
     });
   });
 
-  const PORT = 8000;
   server.listen(PORT, () => {
     console.log(`> Ready on http://localhost:${PORT}`);
   });
