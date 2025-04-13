@@ -1,8 +1,10 @@
-import { connectDB } from '@/lib/mongodb';
-import Message from '@/models/Message';
 import { createServer } from 'http';
 import next from 'next';
 import { Server as SocketIOServer } from 'socket.io';
+import { connectDB } from './src/lib/mongodb.js';
+import Message from './src/models/Message.js';
+
+console.log('MONGODB_URI:', process.env.NEXT_PUBLIC_MONGODB_URI);
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -21,7 +23,7 @@ app.prepare().then(() => {
   });
 
   io.on('connection', (socket) => {
-    const { roomId, userId } = socket.handshake.query;
+    const { roomId, userId }:any = socket.handshake.query;
     console.log(`User ${userId} connected to room ${roomId}`);
 
     socket.join(roomId);
@@ -31,7 +33,11 @@ app.prepare().then(() => {
       io.to(roomId).emit('message', { userId, text });
 
       await connectDB();
-      await Message.create(msg); // save to DB
+      await Message.create({
+        text,
+        userId,
+        roomId
+      }); // save to DB
     });
 
     socket.on('disconnect', () => {

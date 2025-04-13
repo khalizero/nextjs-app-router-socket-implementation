@@ -18,6 +18,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  console.log({URI: process.env.NEXT_PUBLIC_MONGODB_URI})
   return (
     <html lang="en">
       <body
